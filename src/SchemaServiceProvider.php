@@ -25,15 +25,10 @@ class SchemaServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/resources', 'schema');
 
         $app = $this->app;
-        $isLumen = str_contains($app->version(), 'Lumen');
         $isEnabled = env('SCHEMA_ROUTES_ENABLED', false) && 'local' == env('APP_ENV');
 
-        if ($isLumen && $isEnabled) {
-            $app->router->group(['namespace' => $this->namespace], function () use ($app, $isLumen) {
-                require __DIR__ . '/routes.php';
-            });
-        } elseif ($isEnabled) {
-            $app->group(['namespace' => $this->namespace], function () use ($app, $isLumen) {
+        if ($isEnabled) {
+            $app->router->group(['namespace' => $this->namespace], function () use ($app) {
                 require __DIR__ . '/routes.php';
             });
         }
