@@ -29,11 +29,11 @@ class SchemaServiceProvider extends ServiceProvider
         $isEnabled = env('SCHEMA_ROUTES_ENABLED', false) && 'local' == env('APP_ENV');
 
         if ($isLumen && $isEnabled) {
-            $app->group(['namespace' => $this->namespace], function () use ($app, $isLumen) {
+            $app->router->group(['namespace' => $this->namespace], function () use ($app, $isLumen) {
                 require __DIR__ . '/routes.php';
             });
         } elseif ($isEnabled) {
-            $app->router->group(['namespace' => $this->namespace], function () use ($app, $isLumen) {
+            $app->group(['namespace' => $this->namespace], function () use ($app, $isLumen) {
                 require __DIR__ . '/routes.php';
             });
         }
